@@ -1,0 +1,6 @@
+services:
+  bot:
+    build: .
+    command: ["uv", "run", "main.py"]
+    volumes:
+      - .:/bot
