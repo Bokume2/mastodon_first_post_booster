@@ -3,7 +3,7 @@ name = "mastodon-first-post-booster"
 version = "0.1.0"
 description = "Mastodon上でローカルアカウントの初めての投稿をブーストするBot"
 readme = "README.md"
-requires-python = ">=3.13"
+requires-python = ">=3.14"
 dependencies = [
     "mastodon-py>=2.2.1",
     "python-dotenv>=1.2.2",
