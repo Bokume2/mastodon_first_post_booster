@@ -1,4 +1,5 @@
 from datetime import datetime
+from time import sleep
 
 from mastodon import Mastodon
 from mastodon.return_types import Account, Status
@@ -31,6 +32,8 @@ def check_beginner(account: Account) -> bool:
 
 def first_post_boost(client: Mastodon, status: Status) -> None:
     if check_first_post(client, status) and check_beginner(status.account):
+        client.status_unreblog(status)
+        sleep(5)
         client.status_reblog(status)
 
 
