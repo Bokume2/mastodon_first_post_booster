@@ -1,5 +1,7 @@
 from mastodon import Mastodon
-from mastodon.return_types import Status
+from mastodon.return_types import Account, Status
+
+from utils.load_env import MAX_FOLLOWERS
 
 
 def check_public_post(status: Status) -> bool:
@@ -19,3 +21,7 @@ def check_first_post(client: Mastodon, status: Status) -> bool:
         )
     )
     return len(statuses_before) == 0
+
+
+def check_beginner(account: Account) -> bool:
+    return account.followers_count <= MAX_FOLLOWERS
