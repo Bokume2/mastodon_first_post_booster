@@ -8,7 +8,7 @@ from utils.load_env import MAX_BOOST_DAYS, MAX_FOLLOWERS
 
 
 def check_public_post(status: Status) -> bool:
-    return status.visibility == "public" or status.visibility == "unlisted"
+    return status.visibility == "public"
 
 
 def check_first_post(client: Mastodon, status: Status) -> bool:
