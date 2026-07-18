@@ -1,3 +1,4 @@
+from datetime import timedelta
 from os import environ
 from os.path import dirname, join
 
@@ -12,3 +13,6 @@ ACCESS_TOKEN = environ["ACCESS_TOKEN"]
 MAX_FOLLOWERS = int(environ["MAX_FOLLOWERS"])
 if MAX_FOLLOWERS < 0:
     raise ValueError("MAX_FOLLOWERSが負の値に設定されています")
+MAX_BOOST_DAYS = timedelta(days=int(environ["MAX_BOOST_DAYS"]))
+if MAX_BOOST_DAYS < timedelta(days=0):
+    raise ValueError("MAX_BOOST_DAYSが負の値に設定されています")
