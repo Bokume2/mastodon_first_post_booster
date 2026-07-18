@@ -41,4 +41,5 @@ def listen(client: Mastodon):
         except Exception as e:
             print(datetime.now(), file=stderr)
             print(e, file=stderr)
+            print(file=stderr)
             sleep(60)
