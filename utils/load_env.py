@@ -16,3 +16,5 @@ if MAX_FOLLOWERS < 0:
 MAX_BOOST_DAYS = timedelta(days=int(environ["MAX_BOOST_DAYS"]))
 if MAX_BOOST_DAYS < timedelta(days=0):
     raise ValueError("MAX_BOOST_DAYSが負の値に設定されています")
+
+TZ = environ["TZ"]
