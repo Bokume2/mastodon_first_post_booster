@@ -4,12 +4,14 @@ from threading import Thread
 from time import sleep
 
 from functions.schedules import create_scheduler
-from functions.streamings import listen, login
+from functions.streamings import htl_listen, login, ltl_listen
 
 if __name__ == "__main__":
     client = login()
-    thread = Thread(target=listen, args=(client,), daemon=True)
-    thread.start()
+    ltl_thread = Thread(target=ltl_listen, args=(client,), daemon=True)
+    htl_thread = Thread(target=htl_listen, args=(client,), daemon=True)
+    ltl_thread.start()
+    htl_thread.start()
     print("start listening timeline")
 
     scheduler = create_scheduler(client)

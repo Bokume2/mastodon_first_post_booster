@@ -31,12 +31,22 @@ def login() -> Mastodon:
     return Mastodon(api_base_url=BASE_URL, access_token=ACCESS_TOKEN)
 
 
-def listen(client: Mastodon):
+def ltl_listen(client: Mastodon) -> None:
     lbot = LTLBot(client)
-    hbot = HTLBot(client)
     while True:
         try:
             client.stream_local(lbot)
+        except Exception as e:
+            print(datetime.now(), file=stderr)
+            print(e, file=stderr)
+            print(file=stderr)
+            sleep(60)
+
+
+def htl_listen(client: Mastodon) -> None:
+    hbot = HTLBot(client)
+    while True:
+        try:
             client.stream_user(hbot)
         except Exception as e:
             print(datetime.now(), file=stderr)
