@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timezone
 from time import sleep
 
 from mastodon import Mastodon
@@ -38,7 +38,7 @@ def first_post_boost(client: Mastodon, status: Status) -> None:
 
 
 def first_post_boost_scheduled(client: Mastodon) -> None:
-    boost_started = datetime.now()
+    boost_started = datetime.now(tz=timezone.utc)
     since = boost_started - MAX_BOOST_DAYS
     while True:
         tl = client.timeline_local(limit=40, min_id=since)
