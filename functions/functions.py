@@ -30,13 +30,22 @@ def check_beginner(account: Account) -> bool:
     return account.followers_count <= MAX_FOLLOWERS
 
 
+def check_boost_forbiddance(status: Status) -> bool:
+    return "ブースト禁止" in status.content
+
+
 def first_post_boost(client: Mastodon, status: Status) -> None:
     if status.account.id == client.me().id:
         return
-    if check_first_post(client, status) and check_beginner(status.account):
-        client.status_unreblog(status)
-        sleep(5)
-        client.status_reblog(status)
+    if not (check_first_post(client, status) and check_beginner(status.account)):
+        return
+    for reply in client.status_context(status).descendants:
+        if check_boost_forbiddance(reply) and reply.account.id == status.account.id:
+            client.status_unreblog(status)
+            return
+    client.status_unreblog(status)
+    sleep(5)
+    client.status_reblog(status)
 
 
 def first_post_boost_scheduled(client: Mastodon) -> None:

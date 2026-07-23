@@ -7,7 +7,7 @@ from mastodon.return_types import Notification, Status
 
 from utils.load_env import ACCESS_TOKEN, BASE_URL
 
-from .functions import first_post_boost
+from .functions import check_boost_forbiddance, first_post_boost
 
 
 class Bot(StreamListener):
@@ -25,6 +25,14 @@ class HTLBot(Bot):
     def on_notification(self, notification: Notification) -> None:
         if notification.type == "follow":
             self.client.account_follow(notification.account)
+        elif notification.type == "mention":
+            if notification.status is None:
+                return
+            status = notification.status
+            if check_boost_forbiddance(status):
+                for replied in self.client.status_context(status).ancestors:
+                    if replied.account.id == status.account.id:
+                        self.client.status_unreblog(replied)
 
 
 def login() -> Mastodon:
