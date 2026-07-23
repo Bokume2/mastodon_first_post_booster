@@ -31,6 +31,8 @@ def check_beginner(account: Account) -> bool:
 
 
 def first_post_boost(client: Mastodon, status: Status) -> None:
+    if status.account.id == client.me().id:
+        return
     if check_first_post(client, status) and check_beginner(status.account):
         client.status_unreblog(status)
         sleep(5)
